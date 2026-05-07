@@ -1,0 +1,26 @@
+{% extends 'knowledge/base.html' %}
+{% block title %}Удалить правило несовместимости{% endblock %}
+
+{% block content %}
+<div style="text-align:center;margin-bottom:24px;">
+  <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#fee2e2,#fecaca);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;">⚠️</div>
+  <h1 style="font-size:22px;color:#dc2626;">Удалить правило несовместимости?</h1>
+</div>
+
+<div style="background:#f8fafc;border-radius:12px;padding:20px;margin-bottom:24px;">
+  <div style="font-size:13px;color:#64748b;margin-bottom:6px;">Компонент 1</div>
+  <div style="font-weight:700;color:#1e293b;margin-bottom:14px;">{{ inc.component_1.component_name }}</div>
+  <div style="font-size:13px;color:#64748b;margin-bottom:6px;">Компонент 2</div>
+  <div style="font-weight:700;color:#1e293b;margin-bottom:14px;">{{ inc.component_2.component_name }}</div>
+  <div style="font-size:13px;color:#64748b;margin-bottom:6px;">Причина</div>
+  <div style="color:#374151;">{{ inc.reason }}</div>
+</div>
+
+<div class="btn-row">
+  <a href="{% url 'knowledge:incompatibility_list' %}" class="btn btn-secondary">Отмена</a>
+  <form method="post" style="flex:1;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger" style="width:100%;">Удалить</button>
+  </form>
+</div>
+{% endblock %}

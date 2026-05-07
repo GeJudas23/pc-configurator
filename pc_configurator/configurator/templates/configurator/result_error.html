@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ошибки совместимости — PC Configurator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); min-height: 100vh; padding: 40px 20px; }
+    .container { max-width: 700px; margin: 0 auto; }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .error-icon { width: 120px; height: 120px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 56px; animation: shake 0.5s ease-in-out; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+    .page-title { font-size: 36px; font-weight: 800; color: white; text-align: center; margin-bottom: 8px; }
+    .page-subtitle { font-size: 16px; color: rgba(255,255,255,0.85); text-align: center; margin-bottom: 16px; }
+    .errors-summary { background: #fee2e2; border-radius: 16px; padding: 20px 28px; margin-bottom: 24px; text-align: center; animation: slideUp 0.4s 0.1s both; }
+    .error-count { font-size: 48px; font-weight: 800; color: #dc2626; }
+    .error-count-label { font-size: 14px; color: #991b1b; font-weight: 600; }
+    .error-item { background: white; border-radius: 16px; padding: 24px; margin-bottom: 16px; border-left: 6px solid #dc2626; transition: all 0.2s; animation: slideUp 0.4s both; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .error-item:hover { transform: translateX(4px); }
+    .error-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .error-type-badge { font-size: 11px; font-weight: 700; color: #dc2626; text-transform: uppercase; letter-spacing: 0.08em; }
+    .error-message { font-size: 15px; color: #1e293b; font-weight: 600; margin-bottom: 12px; line-height: 1.4; }
+    .error-details { background: white; border: 1px solid #fecaca; border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; color: #374151; }
+    .recommendation-box { background: #dbeafe; border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; color: #1e40af; font-weight: 600; }
+    .recommendation-box::before { content: '💡 '; }
+    .fix-btn { display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
+    .fix-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(59,130,246,0.4); }
+    .btn-row { display: flex; gap: 12px; margin-top: 24px; animation: slideUp 0.4s 0.3s both; }
+    .btn { padding: 14px 24px; border-radius: 12px; font-size: 15px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; text-align: center; flex: 1; }
+    .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.4); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-secondary { background: rgba(255,255,255,0.9); color: #475569; }
+    .btn-secondary:hover { background: white; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="error-icon">❌</div>
+    <h1 class="page-title">Ошибки совместимости</h1>
+    <p class="page-subtitle">Обнаружены проблемы в выбранной конфигурации</p>
+
+    <div class="errors-summary">
+      <div class="error-count">{{ errors|length }}</div>
+      <div class="error-count-label">{% if errors|length == 1 %}ошибка{% elif errors|length < 5 %}ошибки{% else %}ошибок{% endif %} совместимости</div>
+    </div>
+
+    {% for error in errors %}
+    <div class="error-item" style="animation-delay: {{ forloop.counter0 }}00ms;">
+      <div class="error-header">
+        <span style="font-size:28px;">⚠️</span>
+        <span class="error-type-badge">{{ error.error_type }}</span>
+      </div>
+      <div class="error-message">{{ error.message }}</div>
+      <div class="recommendation-box">{{ error.recommendation }}</div>
+      {% if error.step == 'processor' %}<a href="{% url 'configurator:step_processor' %}" class="fix-btn">🔧 Исправить →</a>
+      {% elif error.step == 'motherboard' %}<a href="{% url 'configurator:step_motherboard' %}" class="fix-btn">🔧 Исправить →</a>
+      {% elif error.step == 'ram' %}<a href="{% url 'configurator:step_ram' %}" class="fix-btn">🔧 Исправить →</a>
+      {% elif error.step == 'psu' %}<a href="{% url 'configurator:step_psu' %}" class="fix-btn">🔧 Исправить →</a>
+      {% elif error.step == 'gpu' %}<a href="{% url 'configurator:step_gpu' %}" class="fix-btn">🔧 Исправить →</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="btn-row">
+      <a href="{% url 'configurator:category_select' %}" class="btn btn-secondary">← Вернуться к конфигуратору</a>
+      <a href="{% url 'configurator:step_processor' %}" class="btn btn-primary">🔄 Начать заново</a>
+    </div>
+  </div>
+</body>
+</html>

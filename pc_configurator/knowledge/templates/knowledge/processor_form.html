@@ -1,0 +1,66 @@
+{% extends 'knowledge/base.html' %}
+{% block title %}{% if action == 'edit' %}Редактировать{% else %}Добавить{% endif %} процессор{% endblock %}
+
+{% block content %}
+{% if action == 'edit' %}
+<div class="metadata-box">
+  <div class="meta-item"><span class="meta-label">ID компонента</span><span class="meta-value">{{ component.get_display_id }}</span></div>
+  <div class="meta-item"><span class="meta-label">Дата создания</span><span class="meta-value">{{ component.date_added|date:"d.m.Y H:i" }}</span></div>
+  <div class="meta-item"><span class="meta-label">Последнее изменение</span><span class="meta-value">{{ component.date_modified|date:"d.m.Y H:i" }}</span></div>
+</div>
+{% endif %}
+
+<h1>{% if action == 'edit' %}Редактировать процессор{% else %}Добавить процессор{% endif %}</h1>
+<p class="subtitle">{% if action == 'edit' %}Изменение параметров компонента{% else %}Заполните информацию о новом процессоре{% endif %}</p>
+
+<form method="post" novalidate>
+  {% csrf_token %}
+
+  <div class="form-group">
+    <label for="{{ base_form.component_name.id_for_label }}">Название *</label>
+    {{ base_form.component_name }}
+    {% if base_form.component_name.errors %}<ul class="errorlist">{% for e in base_form.component_name.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+
+  <div class="form-group">
+    <label for="{{ detail_form.socket.id_for_label }}">Сокет *</label>
+    {{ detail_form.socket }}
+    {% if detail_form.socket.errors %}<ul class="errorlist">{% for e in detail_form.socket.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+
+  <div class="form-group">
+    <label for="{{ detail_form.tdp.id_for_label }}">TDP (Ватт) *</label>
+    {{ detail_form.tdp }}
+    {% if detail_form.tdp.errors %}<ul class="errorlist">{% for e in detail_form.tdp.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+
+  <div class="form-group">
+    <div class="checkbox-group">
+      {{ detail_form.has_integrated_graphics }}
+      <label for="{{ detail_form.has_integrated_graphics.id_for_label }}">Встроенная графика</label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="form-group">
+    <label for="{{ base_form.price_category.id_for_label }}">Мин. ценовая категория *</label>
+    {{ base_form.price_category }}
+    {% if base_form.price_category.errors %}<ul class="errorlist">{% for e in base_form.price_category.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+
+  <div class="form-group">
+    <div class="checkbox-group">
+      {{ base_form.is_required }}
+      <label for="{{ base_form.is_required.id_for_label }}">Обязательный компонент</label>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <a href="{% url 'knowledge:component_list' %}" class="btn btn-secondary">Отмена</a>
+    <button type="submit" class="btn {% if action == 'edit' %}btn-primary-green{% else %}btn-primary{% endif %}">
+      {% if action == 'edit' %}Сохранить изменения{% else %}Добавить{% endif %}
+    </button>
+  </div>
+</form>
+{% endblock %}

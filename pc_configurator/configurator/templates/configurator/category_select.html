@@ -1,0 +1,125 @@
+{% extends 'configurator/base.html' %}
+{% block title %}Выбор ценовой категории{% endblock %}
+{% block body_bg %}background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);{% endblock %}
+
+{% block extra_styles %}
+  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  .page-header { text-align: center; margin-bottom: 48px; animation: fadeInDown 0.6s ease-out; }
+  .page-header h1 { font-size: 48px; font-weight: 800; color: white; margin-bottom: 12px; }
+  .page-header p { color: rgba(255,255,255,0.8); font-size: 18px; }
+  .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
+  .category-card { background: white; border-radius: 24px; padding: 40px 32px; cursor: pointer; transition: all 0.3s; border: none; width: 100%; text-align: left; position: relative; overflow: hidden; }
+  .category-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; }
+  .category-card.budget::before { background: #10b981; }
+  .category-card.mid::before { background: #3b82f6; }
+  .category-card.premium::before { background: #8b5cf6; }
+  .category-card:hover { transform: translateY(-12px); }
+  .category-card.budget:hover { box-shadow: 0 24px 60px rgba(16,185,129,0.3); }
+  .category-card.mid:hover { box-shadow: 0 24px 60px rgba(59,130,246,0.3); }
+  .category-card.premium:hover { box-shadow: 0 24px 60px rgba(139,92,246,0.3); }
+  .card-icon { font-size: 40px; margin-bottom: 16px; }
+  .card-title { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+  .category-card.budget .card-title { color: #065f46; }
+  .category-card.mid .card-title { color: #1e40af; }
+  .category-card.premium .card-title { color: #5b21b6; }
+  .card-price { font-size: 14px; font-weight: 600; margin-bottom: 20px; }
+  .category-card.budget .card-price { color: #059669; }
+  .category-card.mid .card-price { color: #2563eb; }
+  .category-card.premium .card-price { color: #7c3aed; }
+  .card-desc { font-size: 15px; color: #64748b; margin-bottom: 24px; line-height: 1.5; }
+  .features-list { list-style: none; margin-bottom: 28px; }
+  .features-list li { font-size: 14px; color: #475569; padding: 6px 0; display: flex; align-items: center; gap: 10px; }
+  .features-list li::before { content: '✓'; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .category-card.budget .features-list li::before { background: #d1fae5; color: #059669; }
+  .category-card.mid .features-list li::before { background: #dbeafe; color: #2563eb; }
+  .category-card.premium .features-list li::before { background: #ede9fe; color: #7c3aed; }
+  .card-btn { width: 100%; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s; color: white; }
+  .category-card.budget .card-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+  .category-card.mid .card-btn { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+  .category-card.premium .card-btn { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+  .card-1 { animation: fadeInUp 0.6s 0.1s both; }
+  .card-2 { animation: fadeInUp 0.6s 0.2s both; }
+  .card-3 { animation: fadeInUp 0.6s 0.3s both; }
+  .knowledge-link { text-align: center; margin-top: 32px; animation: fadeInUp 0.6s 0.4s both; }
+  .knowledge-link a { color: rgba(255,255,255,0.7); font-size: 14px; text-decoration: none; }
+  .knowledge-link a:hover { color: white; }
+{% endblock %}
+
+{% block body %}
+<div class="page-header">
+  <h1>Выберите ценовую категорию</h1>
+  <p>Определите бюджет для вашей конфигурации ПК</p>
+</div>
+
+<div class="categories-grid">
+  {% for cat in categories %}
+  {% if cat.category_name == 'Бюджетная' %}
+  <form method="post" class="card-1">{% csrf_token %}
+    <input type="hidden" name="category_id" value="{{ cat.pk }}">
+    <button type="submit" class="category-card budget">
+      <div class="card-icon">💚</div>
+      <div class="card-title">{{ cat.category_name }}</div>
+      <div class="card-price">
+        {% if cat.max_price %}{{ cat.min_price|floatformat:0 }} — {{ cat.max_price|floatformat:0 }} ₽
+        {% else %}от {{ cat.min_price|floatformat:0 }} ₽{% endif %}
+      </div>
+      <div class="card-desc">{{ cat.description }}</div>
+      <ul class="features-list">
+        <li>Процессор начального уровня</li>
+        <li>Оперативная память DDR4</li>
+        <li>Базовый блок питания</li>
+        <li>Встроенная графика</li>
+      </ul>
+      <div class="card-btn">Выбрать бюджетную →</div>
+    </button>
+  </form>
+  {% elif cat.category_name == 'Средняя' %}
+  <form method="post" class="card-2">{% csrf_token %}
+    <input type="hidden" name="category_id" value="{{ cat.pk }}">
+    <button type="submit" class="category-card mid">
+      <div class="card-icon">💙</div>
+      <div class="card-title">{{ cat.category_name }}</div>
+      <div class="card-price">
+        {% if cat.max_price %}{{ cat.min_price|floatformat:0 }} — {{ cat.max_price|floatformat:0 }} ₽
+        {% else %}от {{ cat.min_price|floatformat:0 }} ₽{% endif %}
+      </div>
+      <div class="card-desc">{{ cat.description }}</div>
+      <ul class="features-list">
+        <li>Процессор среднего уровня</li>
+        <li>Оперативная память DDR5</li>
+        <li>Дискретная видеокарта RTX 3060</li>
+        <li>БП с сертификатом Gold</li>
+      </ul>
+      <div class="card-btn">Выбрать среднюю →</div>
+    </button>
+  </form>
+  {% elif cat.category_name == 'Премиум' %}
+  <form method="post" class="card-3">{% csrf_token %}
+    <input type="hidden" name="category_id" value="{{ cat.pk }}">
+    <button type="submit" class="category-card premium">
+      <div class="card-icon">💜</div>
+      <div class="card-title">{{ cat.category_name }}</div>
+      <div class="card-price">
+        {% if cat.max_price %}{{ cat.min_price|floatformat:0 }} — {{ cat.max_price|floatformat:0 }} ₽
+        {% else %}от {{ cat.min_price|floatformat:0 }} ₽{% endif %}
+      </div>
+      <div class="card-desc">{{ cat.description }}</div>
+      <ul class="features-list">
+        <li>Топовый процессор Core i7</li>
+        <li>Память DDR5 высокой частоты</li>
+        <li>Видеокарта RTX 4070 Ti</li>
+        <li>БП Platinum 850W</li>
+      </ul>
+      <div class="card-btn">Выбрать премиум →</div>
+    </button>
+  </form>
+  {% endif %}
+  {% endfor %}
+</div>
+
+<div class="knowledge-link" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+  <a href="{% url 'configurator:custom_build' %}" style="color:rgba(255,255,255,0.9);font-size:15px;font-weight:600;text-decoration:none;background:rgba(255,255,255,0.15);padding:10px 20px;border-radius:10px;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">🔧 Кастомная сборка</a>
+  <a href="{% url 'knowledge:component_list' %}" style="color:rgba(255,255,255,0.7);font-size:14px;text-decoration:none;">⚙️ Редактор базы знаний</a>
+</div>
+{% endblock %}

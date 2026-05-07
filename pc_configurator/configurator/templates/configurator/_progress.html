@@ -1,0 +1,46 @@
+{% comment %}Requires `step` (int 1-5) in context{% endcomment %}
+<style>
+  .progress-card { background: white; border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  .progress-steps { display: flex; align-items: flex-start; justify-content: center; }
+  .step-wrapper { display: flex; flex-direction: column; align-items: center; }
+  .step-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0; }
+  .step-circle.inactive { background: white; border: 2px solid #e2e8f0; color: #94a3b8; }
+  .step-circle.active { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.4); }
+  .step-circle.completed { background: #10b981; color: white; }
+  .step-lbl { font-size: 11px; font-weight: 600; margin-top: 6px; text-align: center; white-space: nowrap; }
+  .s-inactive { color: #94a3b8; }
+  .s-active { color: #2563eb; }
+  .s-completed { color: #059669; }
+  .step-line { width: 48px; height: 4px; background: #e2e8f0; margin: 18px 0 0; }
+  .step-line.done { background: #3b82f6; }
+</style>
+<div class="progress-card">
+  <div class="progress-steps">
+    {% with step=step %}
+    <div class="step-wrapper">
+      <div class="step-circle {% if step > 1 %}completed{% elif step == 1 %}active{% else %}inactive{% endif %}">{% if step > 1 %}✓{% else %}1{% endif %}</div>
+      <div class="step-lbl {% if step > 1 %}s-completed{% elif step == 1 %}s-active{% else %}s-inactive{% endif %}">Процессор</div>
+    </div>
+    <div class="step-line {% if step > 1 %}done{% endif %}"></div>
+    <div class="step-wrapper">
+      <div class="step-circle {% if step > 2 %}completed{% elif step == 2 %}active{% else %}inactive{% endif %}">{% if step > 2 %}✓{% else %}2{% endif %}</div>
+      <div class="step-lbl {% if step > 2 %}s-completed{% elif step == 2 %}s-active{% else %}s-inactive{% endif %}">Мат. плата</div>
+    </div>
+    <div class="step-line {% if step > 2 %}done{% endif %}"></div>
+    <div class="step-wrapper">
+      <div class="step-circle {% if step > 3 %}completed{% elif step == 3 %}active{% else %}inactive{% endif %}">{% if step > 3 %}✓{% else %}3{% endif %}</div>
+      <div class="step-lbl {% if step > 3 %}s-completed{% elif step == 3 %}s-active{% else %}s-inactive{% endif %}">Память</div>
+    </div>
+    <div class="step-line {% if step > 3 %}done{% endif %}"></div>
+    <div class="step-wrapper">
+      <div class="step-circle {% if step > 4 %}completed{% elif step == 4 %}active{% else %}inactive{% endif %}">{% if step > 4 %}✓{% else %}4{% endif %}</div>
+      <div class="step-lbl {% if step > 4 %}s-completed{% elif step == 4 %}s-active{% else %}s-inactive{% endif %}">БП</div>
+    </div>
+    <div class="step-line {% if step > 4 %}done{% endif %}"></div>
+    <div class="step-wrapper">
+      <div class="step-circle {% if step == 5 %}active{% else %}inactive{% endif %}">5</div>
+      <div class="step-lbl {% if step == 5 %}s-active{% else %}s-inactive{% endif %}">Видеокарта</div>
+    </div>
+    {% endwith %}
+  </div>
+</div>

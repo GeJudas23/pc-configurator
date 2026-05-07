@@ -1,0 +1,43 @@
+[
+  {"model": "core.pricecategory", "pk": 1, "fields": {"category_name": "Бюджетная", "min_price": 30000, "max_price": 50000, "description": "Оптимальный выбор для повседневных задач"}},
+  {"model": "core.pricecategory", "pk": 2, "fields": {"category_name": "Средняя", "min_price": 50000, "max_price": 100000, "description": "Баланс производительности и цены"}},
+  {"model": "core.pricecategory", "pk": 3, "fields": {"category_name": "Премиум", "min_price": 100000, "max_price": null, "description": "Максимальная производительность без компромиссов"}},
+
+  {"model": "core.component", "pk": 1, "fields": {"component_name": "Intel Core i3-12100", "component_type": "processor", "price_category": 1, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 2, "fields": {"component_name": "Intel Core i5-13400", "component_type": "processor", "price_category": 2, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 3, "fields": {"component_name": "Intel Core i7-13700K", "component_type": "processor", "price_category": 3, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+
+  {"model": "core.component", "pk": 4, "fields": {"component_name": "ASUS Prime H610M-K", "component_type": "motherboard", "price_category": 1, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 5, "fields": {"component_name": "MSI B760M Pro-A", "component_type": "motherboard", "price_category": 2, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 6, "fields": {"component_name": "ASUS ROG STRIX Z790-E", "component_type": "motherboard", "price_category": 3, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+
+  {"model": "core.component", "pk": 7, "fields": {"component_name": "Kingston Fury Beast 8GB DDR4", "component_type": "ram", "price_category": 1, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 8, "fields": {"component_name": "Corsair Vengeance 16GB DDR5", "component_type": "ram", "price_category": 2, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 9, "fields": {"component_name": "G.Skill Trident Z5 32GB DDR5", "component_type": "ram", "price_category": 3, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+
+  {"model": "core.component", "pk": 10, "fields": {"component_name": "Seasonic Focus GX-450", "component_type": "psu", "price_category": 1, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 11, "fields": {"component_name": "be quiet! Pure Power 12 650W", "component_type": "psu", "price_category": 2, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 12, "fields": {"component_name": "Corsair HX850 Platinum", "component_type": "psu", "price_category": 3, "is_required": true, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+
+  {"model": "core.component", "pk": 13, "fields": {"component_name": "NVIDIA GeForce RTX 3060", "component_type": "gpu", "price_category": 2, "is_required": false, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+  {"model": "core.component", "pk": 14, "fields": {"component_name": "NVIDIA GeForce RTX 4070 Ti", "component_type": "gpu", "price_category": 3, "is_required": false, "date_added": "2024-01-01T00:00:00Z", "date_modified": "2024-01-01T00:00:00Z"}},
+
+  {"model": "core.processor", "pk": 1, "fields": {"component": 1, "socket": "LGA1700", "tdp": 60, "has_integrated_graphics": true}},
+  {"model": "core.processor", "pk": 2, "fields": {"component": 2, "socket": "LGA1700", "tdp": 65, "has_integrated_graphics": true}},
+  {"model": "core.processor", "pk": 3, "fields": {"component": 3, "socket": "LGA1700", "tdp": 125, "has_integrated_graphics": true}},
+
+  {"model": "core.motherboard", "pk": 1, "fields": {"component": 4, "socket": "LGA1700", "memory_type": "DDR4", "memory_slots": 2, "supports_integrated_graphics": true}},
+  {"model": "core.motherboard", "pk": 2, "fields": {"component": 5, "socket": "LGA1700", "memory_type": "DDR5", "memory_slots": 4, "supports_integrated_graphics": true}},
+  {"model": "core.motherboard", "pk": 3, "fields": {"component": 6, "socket": "LGA1700", "memory_type": "DDR5", "memory_slots": 4, "supports_integrated_graphics": true}},
+
+  {"model": "core.ram", "pk": 1, "fields": {"component": 7, "memory_type": "DDR4", "capacity_gb": 8, "frequency_mhz": 3200}},
+  {"model": "core.ram", "pk": 2, "fields": {"component": 8, "memory_type": "DDR5", "capacity_gb": 16, "frequency_mhz": 5200}},
+  {"model": "core.ram", "pk": 3, "fields": {"component": 9, "memory_type": "DDR5", "capacity_gb": 32, "frequency_mhz": 6000}},
+
+  {"model": "core.powersupply", "pk": 1, "fields": {"component": 10, "wattage": 450, "efficiency_cert": "Gold"}},
+  {"model": "core.powersupply", "pk": 2, "fields": {"component": 11, "wattage": 650, "efficiency_cert": "Gold"}},
+  {"model": "core.powersupply", "pk": 3, "fields": {"component": 12, "wattage": 850, "efficiency_cert": "Platinum"}},
+
+  {"model": "core.gpu", "pk": 1, "fields": {"component": 13, "power_consumption": 170, "power_connectors": "1x 16-pin"}},
+  {"model": "core.gpu", "pk": 2, "fields": {"component": 14, "power_consumption": 285, "power_connectors": "2x 16-pin"}}
+]
