@@ -8,12 +8,20 @@ __pycache__/
 # Django
 *.sqlite3
 local_settings.py
-db.sqlite3
+backend/staticfiles/
 
 # Virtual environments
 venv/
 env/
 .env/
+
+# Environment secrets
+.env
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
 
 # IDE
 .vscode/
@@ -22,3 +30,9 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Docs and references
+Docs_and_ref/
+
+# Docker volumes
+postgres_data/
